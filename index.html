@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script defer src="dist/app.js"> </script>
+    <style>
+        .general{background-color: red;}
+        .work{background-color: blue;}
+        .hobby{background-color: green;}
+        .gym{background-color: orange;}
+    </style>
 </head>
 <body>
     <form class="container" autocomplete="off">
         <label for="name">Task</label>
         <input type="text" id="name">
+        <ul class="categories"></ul>
         <button >Add</button>
         <p>Tasks:</p>
         <ul class="tasks"></ul>
