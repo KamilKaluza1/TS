@@ -39,20 +39,22 @@ const renderCategories = () => {
     });
 };
 const renderTasks = () => {
-    tasks.forEach(({ name, done, category }, index) => {
+    taskContainer.innerHTML = "";
+    tasks.forEach((task, index) => {
         const taskElement = document.createElement("li");
-        taskElement.classList.add(category);
-        const label = document.createElement("label");
-        label.setAttribute("for", `task-${index}`);
-        label.innerText = name;
-        const input = document.createElement("input");
-        input.type = "checkbox";
-        input.name = name;
-        input.id = `task-${index}`;
-        input.addEventListener("change", () => { done = !done; });
-        input.checked = done;
-        taskElement.appendChild(label);
-        taskElement.appendChild(input);
+        taskElement.classList.add(task.category);
+        const id = `task-${index}`;
+        const labelElement = document.createElement("label");
+        labelElement.innerText = task.name;
+        labelElement.setAttribute("for", id);
+        const checkboxElement = document.createElement("input");
+        checkboxElement.type = "checkbox";
+        checkboxElement.name = task.name;
+        checkboxElement.id = id;
+        checkboxElement.checked = task.done;
+        checkboxElement.addEventListener("change", () => task.done = !task.done);
+        taskElement.appendChild(labelElement);
+        taskElement.appendChild(checkboxElement);
         taskContainer.appendChild(taskElement);
     });
 };

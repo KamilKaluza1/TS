@@ -1,7 +1,7 @@
 const taskContainer: HTMLElement = document.querySelector(".tasks");
 const taskNameInput: HTMLInputElement = document.querySelector("#name");
 const addButton: HTMLButtonElement = document.querySelector("button");
-const categoriesContainer = document.querySelector(".categories");
+const categoriesContainer: HTMLElement = document.querySelector(".categories");
 let selectedCategory: Category;
 type Category = "general" | "work" | "hobby" | "gym";
 
@@ -56,34 +56,37 @@ const renderCategories = () => {
 };
 
 const renderTasks = () => {
-  tasks.forEach(({ name, done, category  }, index) => {
-    const taskElement: HTMLElement = document.createElement("li");
-    taskElement.classList.add(category);
+  taskContainer.innerHTML = "";
+  tasks.forEach((task, index) => {
+      const taskElement: HTMLElement = document.createElement("li");
+      taskElement.classList.add(task.category)
+      const id: string = `task-${index}`;
 
+      const labelElement: HTMLLabelElement = document.createElement("label");
+      labelElement.innerText = task.name;
+      labelElement.setAttribute("for", id);
 
-    const label: HTMLLabelElement = document.createElement("label");
-    label.setAttribute("for", `task-${index}`);
-    label.innerText = name;
+      const checkboxElement: HTMLInputElement = document.createElement("input");
+      checkboxElement.type = "checkbox";
+      checkboxElement.name = task.name;
+      checkboxElement.id = id;
+      checkboxElement.checked = task.done;
+      checkboxElement.addEventListener("change", () => task.done = !task.done);
 
-    const input: HTMLInputElement = document.createElement("input");
-    input.type = "checkbox";
-    input.name = name;
-    input.id = `task-${index}`;
-    input.checked = done
-    input.addEventListener("change", () => {done = !done})
+      taskElement.appendChild(labelElement);
+      taskElement.appendChild(checkboxElement);
+      taskContainer.appendChild(taskElement);
 
-    taskElement.appendChild(label)
-    taskElement.appendChild(input)
-    taskContainer.appendChild(taskElement)
   });
+
 };
+
 
 
 addButton.addEventListener("click", (e)=>{
   taskContainer.innerHTML ='';
   e.preventDefault();
   tasks.push({
-    
       name: taskNameInput.value,
       done: false,
       category: selectedCategory,
